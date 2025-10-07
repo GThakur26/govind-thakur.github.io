@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Govind Thakur | AI Engineer & Researcher</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-tertiary: #1a1a1a;
+            --accent: #00ff88;
+            --accent-2: #00ddff;
+            --accent-dim: #00cc6a;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --border: #333333;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Animated Background Grid */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent);
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, var(--accent), transparent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: var(--accent);
+            transition: all 0.3s;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding-top: 80px;
+            z-index: 1;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 255, 136, 0.1), transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+        }
+
+        .hero-label {
+            display: inline-block;
+            padding: 8px 20px;
+            border: 1px solid var(--border);
+            color: var(--accent);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            font-weight: 600;
+            background: rgba(0, 255, 136, 0.05);
+        }
+
+        .hero-content h1 {
+            font-size: clamp(50px, 10vw, 100px);
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent) 50%, var(--accent-2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+            letter-spacing: -2px;
+        }
+
+        .hero-content .subtitle {
+            font-size: clamp(20px, 3vw, 32px);
+            color: var(--text-primary);
+            margin-bottom: 25px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .hero-content .tagline {
+            font-size: clamp(15px, 2vw, 19px);
+            color: var(--text-secondary);
+            margin-bottom: 50px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 80px;
+        }
+
+        .btn {
+            padding: 18px 40px;
+            border: 2px solid var(--accent);
+            background: var(--accent);
+            color: var(--bg-primary);
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.4s;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 13px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.4s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        /* Highlight Cards */
+        .highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .highlight-card {
+            padding: 35px 30px;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s;
+        }
+
+        .highlight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            transform: scaleX(0);
+            transition: transform 0.4s;
+            transform-origin: left;
+        }
+
+        .highlight-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .highlight-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 50px rgba(0, 255, 136, 0.15);
+        }
+
+        .highlight-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .highlight-card h3 {
+            font-size: 16px;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .highlight-card p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 120px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-label {
+            color: var(--accent);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: clamp(36px, 6vw, 56px);
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -1px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .about-text p {
+            margin-bottom: 25px;
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.9;
+        }
+
+        .about-text .intro {
+            font-size: 22px;
+            color: var(--text-primary);
+            font-weight: 500;
+            line-height: 1.7;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .stat-card {
+            padding: 30px;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent), var(--accent-2));
+        }
+
+        .stat-card:hover {
+            transform: translateX(5px);
+            border-color: var(--accent);
+        }
+
+        .stat-number {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .key-themes {
+            margin-top: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .theme-tag {
+            padding: 12px 24px;
+            background: rgba(0, 255, 136, 0.05);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            color: var(--accent);
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .theme-tag:hover {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .skill-card {
+            padding: 40px 35px;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border: 1px solid var(--border);
+            position: relative;
+            transition: all 0.4s;
+            overflow: hidden;
+        }
+
+        .skill-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 255, 136, 0.05), transparent 50%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .skill-card:hover::after {
+            opacity: 1;
+        }
+
+        .skill-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .skill-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .skill-icon {
+            width: 45px;
+            height: 45px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--accent);
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+        }
+
+        .skill-card h3 {
+            color: var(--text-primary);
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .skill-card ul {
+            list-style: none;
+        }
+
+        .skill-card li {
+            padding: 10px 0;
+            color: var(--text-secondary);
+            position: relative;
+            padding-left: 25px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .skill-card li::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .skill-card li:hover {
+            color: var(--text-primary);
+            padding-left: 30px;
+        }
+
+        /* Projects Section */
+        #projects {
+            background: linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 35px;
+        }
+
+        .project-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 20px;
+        }
+
+        .project-number {
+            font-size: 14px;
+            color: var(--accent);
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+        }
+
+        .project-company {
+            color: var(--accent);
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 6px 15px;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            background: rgba(0, 255, 136, 0.05);
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .project-card h3 {
+            color: var(--text-primary);
+            font-size: 24px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .project-card p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .tech-tag {
+            padding: 6px 14px;
+            background: rgba(0, 221, 255, 0.05);
+            border: 1px solid rgba(0, 221, 255, 0.2);
+            color: var(--accent-2);
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+        }
+
+        .project-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .project-link:hover {
+            gap: 12px;
+        }
+
+        /* Experience Section */
+        .timeline-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 60px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--accent), var(--accent-2), transparent);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 60px;
+            padding: 40px;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border: 1px solid var(--border);
+            transition: all 0.4s;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -57px;
+            top: 45px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 4px solid var(--bg-primary);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+            z-index: 2;
+        }
+
+        .timeline-item:hover {
+            border-color: var(--accent);
+            transform: translateX(10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .timeline-item h3 {
+            color: var(--text-primary);
+            font-size: 26px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .timeline-company {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .timeline-period {
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .timeline-overview {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            padding-left: 20px;
+            border-left: 3px solid rgba(0, 255, 136, 0.2);
+        }
+
+        .timeline-item ul {
+            list-style: none;
+        }
+
+        .timeline-item li {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+            line-height: 1.7;
+        }
+
+        .timeline-item li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 18px;
+        }
+
+        .timeline-item strong {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        /* Research Section */
+        .research-grid {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .publication-card {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border: 1px solid var(--border);
+            padding: 45px;
+            margin-bottom: 35px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s;
+        }
+
+        .publication-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent), var(--accent-2));
+        }
+
+        .publication-card:hover {
+            border-color: var(--accent);
+            transform: translateX(10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .pub-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid var(--accent);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: var(--accent);
+        }
+
+        .publication-card h3 {
+            color: var(--text-primary);
+            font-size: 22px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .publication-journal {
+            color: var(--accent);
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        .publication-description {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .scholar-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px 40px;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border: 2px solid var(--border);
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.4s;
+            font-weight: 700;
+            font-size: 15px;
+            margin-top: 20px;
+        }
+
+        .scholar-link:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.2);
+        }
+
+        /* Contact Section */
+        .contact-wrapper {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-wrapper p {
+            color: var(--text-secondary);
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 50px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 25px;
+        }
+
+        .contact-card {
+            padding: 35px 25px;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border: 1px solid var(--border);
+            text-decoration: none;
+            transition: all 0.4s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .contact-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 255, 136, 0.15);
+        }
+
+        .contact-icon {
+            width: 55px;
+            height: 55px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--accent);
+            transition: all 0.4s;
+        }
+
+        .contact-card:hover .contact-icon {
+            background: var(--accent);
+            color: var(--bg-primary);
+            transform: scale(1.1);
+        }
+
+        .contact-card span {
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            border-top: 1px solid var(--border);
+            background: var(--bg-secondary);
+        }
+
+        footer p {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline {
+                padding-left: 40px;
+            }
+            
+            .timeline::before {
+                left: 10px;
+            }
+            
+            .timeline-item::before {
+                left: -37px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 15px;
+                font-size: 12px;
+            }
+
+            .about-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .slide-in {
+            animation: slideInLeft 0.8s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">&lt;GT/&gt;</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#research">Research</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-label">AI Engineer & Researcher</div>
+                <h1>Govind Thakur</h1>
+                <p class="subtitle">Building Intelligent Systems That Serve People</p>
+                <p class="tagline">Creating scalable AI applications that bridge science, engineering, and empathy. From simulation platforms at American Express to multimodal analytics at startups, I design systems that extend human potential.</p>
+                <div class="cta-buttons">
+                    <a href="#projects" class="btn">View Projects</a>
+                    <a href="#research" class="btn btn-secondary">Research</a>
+                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                </div>
+                <div class="highlights">
+                    <div class="highlight-card">
+                        <div class="highlight-icon">01</div>
+                        <h3>AI Simulation & Search</h3>
+                        <p>Enterprise-scale simulation platforms and generative search optimization</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="highlight-icon">02</div>
+                        <h3>LLM & RAG Systems</h3>
+                        <p>Retrieval-augmented generation and prompt engineering at scale</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="highlight-icon">03</div>
+                        <h3>MLOps & Cloud</h3>
+                        <p>Production ML pipelines with automated deployment and monitoring</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="highlight-icon">04</div>
+                        <h3>Research & Ethics</h3>
+                        <p>Published work on AI ethics and emergent intelligence</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Who I Am</div>
+                <h2 class="section-title">About Me</h2>
+            </div>
+            <div class="about-grid">
+                <div>
+                    <div class="about-text">
+                        <p class="intro">Machine Learning and Software Engineer specializing in AI-driven systems that improve how people interact with technology.</p>
+                        <p>I completed my Master's in Computer Science (Artificial Intelligence) from the University of Southern California, where I explored machine learning, optimization, and deep learning at scale. My work gravitates toward systems that connect meaning with data — building architectures that not only compute but understand.</p>
+                        <p>At American Express, I lead the creation of an AI simulation platform that tests and validates generative and semantic search technologies used across the company. Previously at Northern Lights, I designed end-to-end machine learning systems from data pipelines to real-time cloud inference.</p>
+                        <p>My vision? To design agentic AI systems that reason ethically, operate transparently, and serve as trustworthy collaborators to humanity.</p>
+                    </div>
+                    <div class="key-themes">
+                        <div class="theme-tag">Scalable AI Infrastructure</div>
+                        <div class="theme-tag">Human-Centered ML</div>
+                        <div class="theme-tag">RAG Systems</div>
+                        <div class="theme-tag">LLM Evaluation</div>
+                        <div class="theme-tag">Generative Search</div>
+                        <div class="theme-tag">Ethical AI</div>
+                    </div>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">M.Sc.</div>
+                        <div class="stat-label">AI from USC</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">3+</div>
+                        <div class="stat-label">Companies</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">40%</div>
+                        <div class="stat-label">Efficiency Gains</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">2+</div>
+                        <div class="stat-label">Publications</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Technical Expertise</div>
+                <h2 class="section-title">Skills & Technologies</h2>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">AI</div>
+                        <h3>AI & Machine Learning</h3>
+                    </div>
+                    <ul>
+                        <li>Large Language Models (GPT, Claude, Gemini)</li>
+                        <li>Retrieval-Augmented Generation (RAG)</li>
+                        <li>LLM Evaluation & Interpretability</li>
+                        <li>Prompt Engineering & Fine-tuning</li>
+                        <li>Semantic & Generative Search</li>
+                        <li>AI Simulation & Testing Frameworks</li>
+                        <li>Multimodal Analytics (LLaVA)</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">FW</div>
+                        <h3>Frameworks & Libraries</h3>
+                    </div>
+                    <ul>
+                        <li>PyTorch & TensorFlow</li>
+                        <li>Hugging Face Transformers</li>
+                        <li>LangChain & LlamaIndex</li>
+                        <li>FastAPI & Flask</li>
+                        <li>Rasa NLP</li>
+                        <li>Scikit-learn & Pandas</li>
+                        <li>NumPy & Matplotlib</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">ML</div>
+                        <h3>MLOps & Cloud</h3>
+                    </div>
+                    <ul>
+                        <li>AWS SageMaker & EC2</li>
+                        <li>Docker & Kubernetes</li>
+                        <li>CI/CD Pipelines (Jenkins)</li>
+                        <li>Model Monitoring & Logging</li>
+                        <li>Splunk Analytics</li>
+                        <li>Automated Testing Frameworks</li>
+                        <li>Containerized ML Workflows</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">DE</div>
+                        <h3>Development & Tools</h3>
+                    </div>
+                    <ul>
+                        <li>Python & JavaScript</li>
+                        <li>Git & GitHub</li>
+                        <li>SQL & NoSQL Databases</li>
+                        <li>REST APIs & Microservices</li>
+                        <li>Data Pipelines & ETL</li>
+                        <li>Real-time Inference Systems</li>
+                        <li>Statistical Analysis & Metrics</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Portfolio</div>
+                <h2 class="section-title">Featured Projects</h2>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-number">01</span>
+                    </div>
+                    <div class="project-company">American Express</div>
+                    <h3>AGX Simulation Platform</h3>
+                    <p>Spearheaded enterprise-scale AI simulation system replicating user behavior, validating search features, and testing LLM-driven content generation across Amex product lines. Improved validation efficiency by 40% and reduced release turnaround by 30%.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">Splunk</span>
+                        <span class="tech-tag">LLM Testing</span>
+                    </div>
+                    <a href="#" class="project-link">Learn More →</a>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-number">02</span>
+                    </div>
+                    <div class="project-company">American Express</div>
+                    <h3>Generative Search Evaluation</h3>
+                    <p>Developed GPT-based evaluation systems for generating ground-truth labels and human-in-the-loop review. Designed semantic ranking frameworks leveraging metrics like NDCG@k and precision@k for comprehensive search quality assessment.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">GPT</span>
+                        <span class="tech-tag">Claude</span>
+                        <span class="tech-tag">Ranking Metrics</span>
+                        <span class="tech-tag">Evaluation</span>
+                    </div>
+                    <a href="#" class="project-link">Learn More →</a>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-number">03</span>
+                    </div>
+                    <div class="project-company">American Express</div>
+                    <h3>RAG Research & Optimization</h3>
+                    <p>Conducted Retrieval-Augmented Generation research to optimize user containment and click-through rates. Designed prompt-engineering experiments with GPT and Claude for search tuning and performance improvement.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">RAG</span>
+                        <span class="tech-tag">Prompt Engineering</span>
+                        <span class="tech-tag">LangChain</span>
+                        <span class="tech-tag">Analytics</span>
+                    </div>
+                    <a href="#" class="project-link">Learn More →</a>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-number">04</span>
+                    </div>
+                    <div class="project-company">Northern Lights</div>
+                    <h3>Multimodal Analytics Platform</h3>
+                    <p>Designed and implemented AI pipelines for multimodal analytics MVPs covering data ingestion, model training, and real-time deployment. Integrated GPT, Gemini, and LLaVA models for extracting structured insights from unstructured data.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">GPT</span>
+                        <span class="tech-tag">Gemini</span>
+                        <span class="tech-tag">LLaVA</span>
+                        <span class="tech-tag">Multimodal AI</span>
+                    </div>
+                    <a href="#" class="project-link">Learn More →</a>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-number">05</span>
+                    </div>
+                    <div class="project-company">Northern Lights</div>
+                    <h3>ML Deployment Pipeline</h3>
+                    <p>Developed containerized ML workflows using AWS SageMaker and Docker to automate model training and deployment cycles. Implemented CI/CD automation with Jenkins, accelerating release velocity by 35%.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">AWS SageMaker</span>
+                        <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">Jenkins</span>
+                        <span class="tech-tag">MLOps</span>
+                    </div>
+                    <a href="#" class="project-link">Learn More →</a>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-number">06</span>
+                    </div>
+                    <div class="project-company">JP Morgan Chase</div>
+                    <h3>E-Trading Assistant Bot</h3>
+                    <p>Enhanced E-Trading Assistant Bot by integrating Rasa NLP, increasing response accuracy by 20%. Refactored bot architecture into modular microservices to improve system performance and maintainability.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Rasa NLP</span>
+                        <span class="tech-tag">Microservices</span>
+                        <span class="tech-tag">Chatbot</span>
+                        <span class="tech-tag">Python</span>
+                    </div>
+                    <a href="#" class="project-link">Learn More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Career Journey</div>
+                <h2 class="section-title">Professional Experience</h2>
+            </div>
+            <div class="timeline-container">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h3>AIML Engineer – II</h3>
+                        <div class="timeline-company">American Express | GenAI Search Team</div>
+                        <div class="timeline-period">📍 Phoenix, AZ | Sept 2024 – Present</div>
+                        <p class="timeline-overview">Building simulation systems, evaluation pipelines, and generative search POCs that power AI-driven digital experiences at scale.</p>
+                        <ul>
+                            <li><strong>AGX Simulation Platform:</strong> Spearheaded AGX simulation system to replicate user behavior, validate search features, and test LLM-driven content generation. Improved validation efficiency by 40% and reduced release turnaround by 30%.</li>
+                            <li><strong>Automated Testing Pipelines:</strong> Built reusable validation frameworks using Python, FastAPI, and Splunk with real-time monitoring and analytics dashboards that cut production issues by 35%.</li>
+                            <li><strong>AI Research & Evaluation:</strong> Developed GPT-based evaluation systems for ground-truth labels and human-in-the-loop review. Designed semantic ranking frameworks leveraging NDCG@k and precision@k metrics.</li>
+                            <li><strong>RAG & Prompt Engineering:</strong> Conducted Retrieval-Augmented Generation research to optimize user containment and click-through rates through systematic prompt-engineering experiments.</li>
+                            <li><strong>Cross-functional Collaboration:</strong> Partnered with Data Science, Analytics, and Mobile teams to align AI testing results with real-world metrics and business KPIs.</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>Machine Learning Engineer Intern</h3>
+                        <div class="timeline-company">Northern Lights (Early-Stage Startup)</div>
+                        <div class="timeline-period">📍 Los Angeles, CA | Jun 2023 – Sept 2024</div>
+                        <p class="timeline-overview">Worked in compact two-person tech team building multimodal analytics platform from ground up — handling data collection, modeling, backend, and MLOps.</p>
+                        <ul>
+                            <li>Designed and implemented AI pipelines for multimodal analytics MVPs, covering data ingestion, model training, and real-time deployment.</li>
+                            <li>Developed containerized ML workflows using AWS SageMaker and Docker to automate training and deployment cycles, accelerating release velocity by 35%.</li>
+                            <li>Integrated GPT, Gemini, and LLaVA models for extracting structured insights from unstructured enterprise data with investor-ready proof-of-concept results.</li>
+                            <li>Implemented CI/CD automation with Jenkins, improving iteration cycles and ensuring experiment reproducibility.</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>Software Engineering Intern</h3>
+                        <div class="timeline-company">JP Morgan Chase</div>
+                        <div class="timeline-period">📍 Mumbai, India | Jun 2021 – Aug 2021</div>
+                        <ul>
+                            <li>Enhanced E-Trading Assistant Bot by integrating Rasa NLP, increasing response accuracy by 20%.</li>
+                            <li>Refactored bot architecture into modular microservices to improve system performance and maintainability.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Section -->
+    <section id="research">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Academic Contributions</div>
+                <h2 class="section-title">Research & Publications</h2>
+            </div>
+            <div class="research-grid">
+                <div class="publication-card">
+                    <div class="pub-icon">📄</div>
+                    <h3>Emergent Ethics in Agentic Simulations: Moral Incubation and Conscious Development across GPT, Claude, Gemini, and XAI</h3>
+                    <div class="publication-journal">Springer Nature – AI and Ethics Journal (Under Review, 2025)</div>
+                    <p class="publication-description">Explores the moral and ethical implications of autonomous AI systems and emergent behavior in agentic simulations, examining how different LLM architectures develop and express ethical reasoning.</p>
+                </div>
+                <div class="publication-card">
+                    <div class="pub-icon">📄</div>
+                    <h3>Comparison of Tabular Synthetic Data Generation Techniques using Propensity and Cluster Log Metric</h3>
+                    <div class="publication-journal">Elsevier – International Journal of Information Management Data Insights (2023)</div>
+                    <p class="publication-description">Comparative analysis of data generation methods and their statistical validity in privacy-preserving AI, providing framework for evaluating synthetic data quality.</p>
+                </div>
+                <a href="https://scholar.google.com/citations?user=WGpPSYcAAAAJ&hl=en" class="scholar-link" target="_blank">
+                    <span>📚</span>
+                    <span>View Full Google Scholar Profile</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Let's Connect</div>
+                <h2 class="section-title">Get In Touch</h2>
+            </div>
+            <div class="contact-wrapper">
+                <p>I'm always open to discussing new opportunities, collaborations, or research projects in AI and machine learning. Whether you're working on cutting-edge systems or exploring ethical AI, let's connect.</p>
+                <div class="contact-grid">
+                    <a href="mailto:your.email@example.com" class="contact-card">
+                        <div class="contact-icon">✉</div>
+                        <span>Email</span>
+                    </a>
+                    <a href="https://github.com/yourusername" class="contact-card" target="_blank">
+                        <div class="contact-icon">⚡</div>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="https://linkedin.com/in/yourusername" class="contact-card" target="_blank">
+                        <div class="contact-icon">◆</div>
+                        <span>LinkedIn</span>
+                    </a>
+                    <a href="https://scholar.google.com/citations?user=WGpPSYcAAAAJ&hl=en" class="contact-card" target="_blank">
+                        <div class="contact-icon">◉</div>
+                        <span>Scholar</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Govind Thakur. Building intelligent systems that serve people.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all major sections
+        document.querySelectorAll('.highlight-card, .stat-card, .skill-card, .project-card, .timeline-item, .publication-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
