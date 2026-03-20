@@ -1278,7 +1278,7 @@
             let isUnlocked = false;
             let isChatOpen = false;
             let keySequence = '';
-            const targetSequence = 'hireme';
+            const targetSequence = 'hiring';
 
             function unlockBot() {
                 isUnlocked = true;
@@ -1327,7 +1327,7 @@
             });
 
             const verifyCode = () => {
-                if (aiCodeInput.value.toLowerCase().trim() === 'hireme') {
+                if (aiCodeInput.value.toLowerCase().trim() === 'hiring') {
                     aiErrorMsg.style.display = 'none';
                     unlockBot();
                     aiCodeInput.value = ''; // clear input
@@ -1363,9 +1363,9 @@
                 }
             });
 
-            // Auto-unlock via URL flags (?hire=me or ?recruiter=true)
+            // Auto-unlock via URL flags (?hiring=true or ?recruiter=true)
             const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('hire') === 'me' || urlParams.get('recruiter') === 'true') {
+            if (urlParams.get('hiring') === 'true' || urlParams.has('hiring') || urlParams.get('recruiter') === 'true') {
                 setTimeout(unlockBot, 800);
             }
         });
