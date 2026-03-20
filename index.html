@@ -668,6 +668,186 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* --- AI Bot Widget CSS --- */
+        #ai-bot-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        #ai-bot-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            border: none;
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            padding: 0;
+        }
+
+        #ai-bot-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+        }
+
+        #ai-bot-btn svg {
+            width: 28px;
+            height: 28px;
+            fill: white;
+        }
+
+        /* Modal Overlay */
+        .ai-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .ai-modal-overlay.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .ai-modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .ai-modal-overlay.show .ai-modal {
+            transform: scale(1);
+        }
+
+        .ai-modal h3 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .ai-modal p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .ai-modal input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border-light);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            outline: none;
+            text-align: center;
+            letter-spacing: 2px;
+            transition: border-color 0.3s ease;
+        }
+
+        .ai-modal input:focus {
+            border-color: var(--accent-cyan);
+        }
+
+        .error-msg {
+            color: var(--accent-pink);
+            font-size: 0.85rem;
+            margin-top: -10px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        /* Chat Container */
+        .ai-chat-container {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 380px;
+            height: 600px;
+            max-height: calc(100vh - 120px);
+            max-width: calc(100vw - 60px);
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            z-index: 1000;
+            overflow: hidden;
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .ai-chat-container.show {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .ai-chat-header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-chat-title {
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+        }
+
+        .ai-chat-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .ai-chat-close:hover {
+            color: var(--accent-pink);
+        }
+
+        .ai-chat-iframe {
+            flex-grow: 1;
+            width: 100%;
+            border: none;
+            background: transparent;
+        }
     </style>
 </head>
 
@@ -1044,6 +1224,151 @@
         window.addEventListener("scroll", reveal);
         // Trigger once to load items already in viewport
         reveal();
+    </script>
+
+    <!-- AI Bot Widget HTML -->
+    <div id="ai-bot-widget">
+        <button id="ai-bot-btn" aria-label="Talk to AI" title="Recruiter Access">
+            <svg viewBox="0 0 24 24">
+                <path
+                    d="M12 2C6.48 2 2 6.48 2 12c0 1.58.38 3.08 1.05 4.42l-1.39 3.07a1 1 0 0 0 1.3 1.3l3.07-1.39A9.95 9.95 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.32 0-2.58-.29-3.73-.83a1 1 0 0 0-.69-.07l-2.07.94.94-2.07a1 1 0 0 0-.07-.69A7.95 7.95 0 0 1 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z" />
+                <circle cx="8" cy="12" r="1.5" />
+                <circle cx="12" cy="12" r="1.5" />
+                <circle cx="16" cy="12" r="1.5" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- AI Bot Modal HTML -->
+    <div class="ai-modal-overlay" id="ai-modal">
+        <div class="ai-modal">
+            <h3>Restricted Access</h3>
+            <p>Gaia is an AI assistant specifically trained to discuss my professional background. Please enter the
+                recruiter access code.</p>
+            <input type="text" id="ai-access-code" placeholder="Enter Access Code" autocomplete="off">
+            <div class="error-msg" id="ai-error-msg">Invalid Access Code</div>
+            <button class="btn btn-primary" id="ai-submit-code" style="width:100%">Unlock Gaia</button>
+            <button class="btn btn-secondary" id="ai-close-modal"
+                style="width:100%; margin-top: 10px; border:none; background:transparent">Cancel</button>
+        </div>
+    </div>
+
+    <!-- AI Chat Container HTML -->
+    <div class="ai-chat-container" id="ai-chat-container">
+        <div class="ai-chat-header">
+            <span class="ai-chat-title">Gaia AI Assistant</span>
+            <button class="ai-chat-close" id="ai-chat-close">&times;</button>
+        </div>
+        <iframe class="ai-chat-iframe" id="ai-iframe" data-src="https://gaia.govindthakur.com"></iframe>
+    </div>
+
+    <!-- AI Bot Logic JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const aiBtn = document.getElementById('ai-bot-btn');
+            const aiModal = document.getElementById('ai-modal');
+            const aiCodeInput = document.getElementById('ai-access-code');
+            const aiSubmitBtn = document.getElementById('ai-submit-code');
+            const aiCloseModalBtn = document.getElementById('ai-close-modal');
+            const aiErrorMsg = document.getElementById('ai-error-msg');
+            const aiChatContainer = document.getElementById('ai-chat-container');
+            const aiChatClose = document.getElementById('ai-chat-close');
+            const aiIframe = document.getElementById('ai-iframe');
+
+            let isUnlocked = false;
+            let isChatOpen = false;
+            let keySequence = '';
+            const targetSequence = 'hireme';
+
+            function unlockBot() {
+                isUnlocked = true;
+                aiModal.classList.remove('show');
+                setTimeout(() => {
+                    aiModal.style.display = 'none';
+                    openChat();
+                }, 300);
+
+                // Visual sequence to confirm unlock
+                document.body.style.boxShadow = "inset 0 0 100px rgba(6, 182, 212, 0.2)";
+                setTimeout(() => { document.body.style.boxShadow = "none"; }, 1000);
+            }
+
+            function openChat() {
+                if (!isUnlocked) {
+                    aiModal.style.display = 'flex';
+                    aiModal.offsetWidth; // Reflow
+                    aiModal.classList.add('show');
+                    aiCodeInput.focus();
+                    return;
+                }
+
+                // Lazy load iframe on unlock
+                if (!aiIframe.src || aiIframe.src === window.location.href) {
+                    aiIframe.src = aiIframe.getAttribute('data-src');
+                }
+
+                aiChatContainer.style.display = 'flex';
+                aiChatContainer.offsetWidth; // Reflow
+                aiChatContainer.classList.add('show');
+                isChatOpen = true;
+            }
+
+            function closeChat() {
+                aiChatContainer.classList.remove('show');
+                setTimeout(() => { aiChatContainer.style.display = 'none'; }, 300);
+                isChatOpen = false;
+            }
+
+            aiBtn.addEventListener('click', () => isChatOpen ? closeChat() : openChat());
+
+            aiCloseModalBtn.addEventListener('click', () => {
+                aiModal.classList.remove('show');
+                setTimeout(() => { aiModal.style.display = 'none'; }, 300);
+            });
+
+            const verifyCode = () => {
+                if (aiCodeInput.value.toLowerCase().trim() === 'hireme') {
+                    aiErrorMsg.style.display = 'none';
+                    unlockBot();
+                    aiCodeInput.value = ''; // clear input
+                } else {
+                    aiErrorMsg.style.display = 'block';
+                    const modalInner = aiModal.querySelector('.ai-modal');
+                    modalInner.style.transform = 'translate(10px, 0)';
+                    setTimeout(() => modalInner.style.transform = 'translate(-10px, 0)', 100);
+                    setTimeout(() => modalInner.style.transform = 'translate(10px, 0)', 200);
+                    setTimeout(() => modalInner.style.transform = 'translate(0, 0)', 300);
+                }
+            };
+
+            aiSubmitBtn.addEventListener('click', verifyCode);
+            aiCodeInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') verifyCode();
+            });
+            aiChatClose.addEventListener('click', closeChat);
+
+            window.addEventListener('keydown', (e) => {
+                const tag = e.target.tagName.toLowerCase();
+                if (tag === 'input' || tag === 'textarea') return;
+
+                keySequence += e.key.toLowerCase();
+                if (keySequence.length > targetSequence.length) {
+                    keySequence = keySequence.substring(keySequence.length - targetSequence.length);
+                }
+
+                if (keySequence === targetSequence) {
+                    keySequence = '';
+                    if (!isUnlocked) unlockBot();
+                    else if (!isChatOpen) openChat();
+                }
+            });
+
+            // Auto-unlock via URL flags (?hire=me or ?recruiter=true)
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('hire') === 'me' || urlParams.get('recruiter') === 'true') {
+                setTimeout(unlockBot, 800);
+            }
+        });
     </script>
 </body>
 
